@@ -1,0 +1,35 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin: 0 0 200px;
+}
+#corbaixo{
+	background-color: #8F8D8D;
+}
+#rodape{
+	background-color: #101010;
+}
+#cormeio{
+	background-color: #FAF7AD;
+}
+
+#botaoComprar{
+	border: 0 none;
+	background-color: white;
+}
+#botoesCompras{
+	margin-top: 50px;
+	margin-right: 280px;
+}
+#avaliacao{
+	margin-top: 50px;
+}
+footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 100px;
+    background-color: green;
+}
