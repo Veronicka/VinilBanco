@@ -42,7 +42,7 @@
                         </button>
                 </form>
         		<ul class="nav navbar-nav navbar-right">
-        			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
+        			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
 	        		<li><a href="#">Login</a></li>
         		</ul>
         	</div>
@@ -58,9 +58,39 @@
            <h2>Confirmação da Compra</h2>
            <hr>
            <%Categoria cat = (Categoria) session.getAttribute("cat"); %>
-           <%ArrayList<Categoria> vendidos = (ArrayList<Categoria>) session.getAttribute("vendidos"); %>
+           <%ArrayList<Categoria> carrinho = (ArrayList<Categoria>) session.getAttribute("carrinho"); 
+           	float soma = 0;
+           %>
            <div id="vendaVinis">
-           <%if(cat != null){%>
+           <%if(carrinho != null && !carrinho.isEmpty()){ %>
+           		<table class="table table-hover">
+	        	<thead>
+	                <tr>
+	                  <th>Imagem</th>
+	                  <th>Nome</th>
+	                  <th>Categoria</th>
+	                  <th>Quantidade</th>
+	                  <th>Preço</th>
+	                </tr>
+                </thead>
+                <%for(Categoria c: carrinho){ %>
+                	<tr>
+                		<td><img src="<%=c.getImg()%>"  class="img-thumbnail" style="width: 100px; height: 100px;"></td>
+                		<td><%=c.getNome() %></td>
+                		<td><%=c.getCateg() %></td>
+                		<td></td>
+                		<td><%=c.getPreco() %></td>
+                		<%soma+=c.getPreco(); %>
+                	</tr>
+                <%} %>
+			</table>
+			<div align="center">
+			<h4 align="right"><b>Total: </b><%=soma %></h4><br/>
+		  	  <br />
+		  	  	<button id="botaoSim" value="<%=cat.getId()%>" class="btn btn-default">Sim</button>
+		  	  	<button id="botaoNao" name="nao" class="btn btn-default">Não</button>
+		  	 </div>
+           <%}else if(cat != null){%>
            		<div class="col-md-5" align="center">
 		  			<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-516777" href="#panel-element-566363">
 		  			<img src="<%=cat.getImg()%>" class="img-thumbnail" style="width: 250px; height: 250px;" /></a>
@@ -72,8 +102,8 @@
 		  	  </div>
 		  	  <div>
 		  	  <br />
-		  	  	<button class="btn btn-default">Sim</button>
-		  	  	<button class="btn btn-default">Não</button>
+		  	  	<button id="botaoSim" value="<%=cat.getId()%>" class="btn btn-default">Sim</button>
+		  	  	<button id="botaoNao" name="nao" class="btn btn-default">Não</button>
 		  	  </div>
 	  		<%}%>
            </div>	        

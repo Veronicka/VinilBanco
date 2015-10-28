@@ -1,5 +1,6 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="fatec.com.model.Categoria"%>
+<%@page import="fatec.com.model.Vendidos"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,10 +13,10 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/crudAjax.js"></script>
-<title>ViniStore - Venda</title>
+<title>Vinil Store - Venda Realizada</title>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 		    <!-- Brand and toggle get grouped for better mobile display -->
    			<div class="navbar-header">
@@ -29,8 +30,7 @@
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
-        			<li class="active"><a href="index.html">Novos<span class="sr-only">(current)</span></a></li>
-        			<li><a href="#">Usados</a></li>
+        			<li class="active"><form action="limpar" method="post"><button type="submit">Novos</button></form><span class="sr-only">(current)</span></a></li>
         			<li><a href="relatorioVendas.jsp">Relatório</a></li>
         			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
         			
@@ -42,67 +42,60 @@
                         </button>
                 </form>
         		<ul class="nav navbar-nav navbar-right">
-        			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
+        			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
 	        		<li><a href="#">Login</a></li>
         		</ul>
         	</div>
   		</div>
 </nav>
 <br/><br/><br/>
-
-    <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
-        </div>
+        <div class="col-md-2"></div>
         <div class="col-md-8">
-           <h2>Vinis</h2>
-           <hr>
-           <%Categoria cat = (Categoria) session.getAttribute("cat"); %>
-           <%ArrayList<Categoria> vendidos = (ArrayList<Categoria>) session.getAttribute("vendidos"); %>
-           <div id="vendaVinis">
-           <%if(cat != null){%>
-           		<div class="col-md-5" align="center">
-		  			<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-516777" href="#panel-element-566363">
-		  			<img src="<%=cat.getImg()%>" class="img-thumbnail" style="width: 250px; height: 250px;" /></a>
-	  			</div>
-		  	  <div>
-		  	  	<br/>
-		  	  	<h4><%=cat.getNome() %></h4>
-		  	    <h5>Quantidade vendidos: <%=cat.getQuantVend()%></h5>
-		  	    <br/>
-		  	  	<h3>R$ <%=cat.getPreco() %></h3>
-		  	  	
-		  	  	<div id="botoesCompras" align="center">
-			  	  	<form action="carrinho">
-		  	  			<a class="btn btn-default" href="vendaVinil.jsp">Comprar</a>
-			  	  		<button type="submit" style="float:right;" class="btn btn-default">Add Carrinho<input hidden="hidden" type="text" name="id" value="<%=cat.getId()%>"></input></button>
-			  	  	</form>
-		  	  	</div>
-		  	  </div>
-	  		<%}%>
-           </div>
-           <div id="avaliacao" class="col-md-8">
-           <h4>Quantidade vendida</h4>
-	           <div align="center" class="progress">
-	           <%int c = (cat.getQuantVend()*100)/cat.getQuant(); %>
-				  <div class="progress-bar" role="progressbar" aria-valuenow="<%=c%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=c%>%;">
-				    <%=c%>%
-				  </div>
-				</div>
-           <h4>Avaliação dos Clientes</h4>
-	           <div align="center" class="progress">
-				  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-				    60%
-				  </div>
-				</div>
-	        </div>
-	        
+	        <h2>Compra Realizada!</h2>
+	        <hr>
+	        <%Vendidos vendido = (Vendidos) session.getAttribute("venda"); %>
+	        <%Float soma = (Float) session.getAttribute("somaTotal"); %>
+	        <%ArrayList<Vendidos> vendidos = (ArrayList<Vendidos>) session.getAttribute("vendidos"); %>
+	        <%if(vendidos != null){ %>
+	        <table class="table table-hover">
+	        	<thead>
+	                <tr>
+	                  <th>Nome</th>
+	                  <th>Categoria</th>
+	                  <th>Quantidade</th>
+	                  <th>Preço</th>
+	                  <th>Data/Hora</th>
+	                </tr>
+                </thead>
+                <%for(Vendidos c: vendidos){ %>
+                	<tr>
+                		<td><%=c.getNome() %></td>
+                		<td><%=c.getCateg() %></td>
+                		<td></td>
+                		<td><%=c.getPreco() %></td>
+                		<td><%=c.getHora() %></td>
+                	</tr>
+                <%} %>
+			</table>
+			<h4 align="right"><b>Total da compra: </b><%=soma %></h4><br/>
+        <%}else if(vendido != null){ %>
+	        <ul style="list-style-type:none">
+	        	<li><b>Nome: </b><%=vendido.getNome()%></li>
+  				<li><b>Categoria: </b><%=vendido.getCateg()%></li>
+  				<li><b>Quantidade: </b></li>
+  				<li><b>Preço: </b><%=vendido.getPreco()%></li>
+  				<li><b>Data/Hora: </b><%=vendido.getHora()%></li>
+	        </ul>
+	        <br/>
+        <%} %>
+	    	<h3 align="center">A Vinil Store agradece sua compra!</h3>
         </div>
-    <div class="col-md-2">
-    </div>
-  </div>
-  </div>
-      <footer>
+        <div class="col-md-2"></div>
+     </div>
+ </div>
+ <footer>
       <div>
         <div class="row" id="corbaixo">
         <br/>
@@ -159,5 +152,5 @@
         </div>
     </div>
   </footer>
-  </body>
+</body>
 </html>

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 public class Inventario {
 	public static Inventario instance;
 	public static ArrayList<Categoria> inventario;
-	public static ArrayList<Categoria> vendidos = new ArrayList<Categoria>();
+	public static ArrayList<Vendidos> vendidos = new ArrayList<Vendidos>();
+	public static ArrayList<Categoria> carrinho = new ArrayList<Categoria>();
 
 	public static Inventario getInstance(){
 		if(instance == null){

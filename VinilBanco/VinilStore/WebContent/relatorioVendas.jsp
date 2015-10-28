@@ -1,5 +1,6 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="fatec.com.model.Categoria"%>
+<%@page import="fatec.com.model.Vendidos"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,10 +13,10 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/crudAjax.js"></script>
-<title>ViniStore - Venda</title>
+<title>Vinil Store - Relatório de Vendas</title>
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
 		    <!-- Brand and toggle get grouped for better mobile display -->
    			<div class="navbar-header">
@@ -25,7 +26,7 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="index.html">Vinil Store</a>
+      			<a class="navbar-brand" href="#">Vinil Store</a>
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
@@ -49,60 +50,48 @@
   		</div>
 </nav>
 <br/><br/><br/>
-
-    <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+	        <h2>Compra Realizada!</h2>
+	        <hr>
+	        <%ArrayList<Vendidos> vendidos = (ArrayList<Vendidos>) session.getAttribute("vendidos"); %>
+	        <%if(vendidos != null && !vendidos.isEmpty()){ %>
+	        <table class="table table-hover">
+	        	<thead>
+	                <tr>
+	                  <th>Id</th>
+	                  <th>Creation</th>
+	                  <th>Nome</th>
+	                  <th>Preço</th>
+	                  <th>Categoria</th>
+	                  <th>Quantidade</th>
+	                  <th>Qtd Vendida</th>
+	                  <th>Data/Hora</th>
+	                </tr>
+                </thead>
+                <%for(Vendidos v: vendidos){ %>
+                	<tr>
+                		<td><%=v.getId() %></td>
+                		<td><%=v.getCreation() %></td>
+                		<td><%=v.getNome() %></td>
+                		<td><%=v.getPreco() %></td>
+                		<td><%=v.getCateg() %></td>
+                		<td><%=v.getQuant() %></td>
+                		<td><%=v.getQuantVend() %></td>
+                		<td><%=v.getHora() %></td>
+                	</tr>
+                <%} %>
+			</table>
         </div>
-        <div class="col-md-8">
-           <h2>Vinis</h2>
-           <hr>
-           <%Categoria cat = (Categoria) session.getAttribute("cat"); %>
-           <%ArrayList<Categoria> vendidos = (ArrayList<Categoria>) session.getAttribute("vendidos"); %>
-           <div id="vendaVinis">
-           <%if(cat != null){%>
-           		<div class="col-md-5" align="center">
-		  			<a class="panel-title collapsed" data-toggle="collapse" data-parent="#panel-516777" href="#panel-element-566363">
-		  			<img src="<%=cat.getImg()%>" class="img-thumbnail" style="width: 250px; height: 250px;" /></a>
-	  			</div>
-		  	  <div>
-		  	  	<br/>
-		  	  	<h4><%=cat.getNome() %></h4>
-		  	    <h5>Quantidade vendidos: <%=cat.getQuantVend()%></h5>
-		  	    <br/>
-		  	  	<h3>R$ <%=cat.getPreco() %></h3>
-		  	  	
-		  	  	<div id="botoesCompras" align="center">
-			  	  	<form action="carrinho">
-		  	  			<a class="btn btn-default" href="vendaVinil.jsp">Comprar</a>
-			  	  		<button type="submit" style="float:right;" class="btn btn-default">Add Carrinho<input hidden="hidden" type="text" name="id" value="<%=cat.getId()%>"></input></button>
-			  	  	</form>
-		  	  	</div>
-		  	  </div>
-	  		<%}%>
-           </div>
-           <div id="avaliacao" class="col-md-8">
-           <h4>Quantidade vendida</h4>
-	           <div align="center" class="progress">
-	           <%int c = (cat.getQuantVend()*100)/cat.getQuant(); %>
-				  <div class="progress-bar" role="progressbar" aria-valuenow="<%=c%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=c%>%;">
-				    <%=c%>%
-				  </div>
-				</div>
-           <h4>Avaliação dos Clientes</h4>
-	           <div align="center" class="progress">
-				  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-				    60%
-				  </div>
-				</div>
-	        </div>
-	        
-        </div>
-    <div class="col-md-2">
-    </div>
-  </div>
-  </div>
-      <footer>
+        <%}else{%>
+        	<h4>Não há relatório</h4>
+        <%} %>
+        <div class="col-md-1"></div>
+     </div>
+ </div>
+ <footer>
       <div>
         <div class="row" id="corbaixo">
         <br/>
@@ -159,5 +148,5 @@
         </div>
     </div>
   </footer>
-  </body>
+</body>
 </html>

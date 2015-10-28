@@ -6,6 +6,8 @@ $(document).ready(function () {
   var $quantInput = $('#quant-input');
   var $precoInput = $('#preco-input');
   var $categInput = $('#categ-input');
+  var $simInput = $('#botaoSim');
+  var $naoInput = $('#botaoNao');
   var $imgInput = $('#img-input');
   var $tabelaCategoria = $('#tabela-categoria');
   var $listarAjaxLoader = $('#listar-ajax-loader');
@@ -42,7 +44,7 @@ $(document).ready(function () {
 
       $botao.click(function () {
     	  $.get('vendaVinil',
-    			  {'id': categoria.id}).success(function (cat) {
+    			  {'id': categoria.id}).success(function () {
     				  window.location = "venda.jsp";
     			  }).error(function (erros) {
     				  alert('Não é possível apagar no momento');
@@ -50,6 +52,22 @@ $(document).ready(function () {
       });
       $listaVinis.append($linhaObjeto);     
   }
+  
+  $simInput.click(function(){
+	  var categoria = $simInput.val();
+		 $.post('venda',
+   			  {'id': categoria}).success(function () {
+   				alert("Compra realizada com sucesso!");
+   				window.location = "compraRealizada.jsp";
+			  }).error(function (erros) {
+				  alert('Não é possível apagar no momento');
+		}); 
+  });
+  
+  $naoInput.click(function(){
+	  alert("Compra cancelada!");
+	  window.location = "index.html";
+  });
 
 
   function adicionarCategoria(categoria) {
@@ -59,9 +77,9 @@ $(document).ready(function () {
     linha += '<td>' + categoria.creation + '</td>';
     linha += '<td>' + categoria.nome + '</td>';
     linha += '<td>' + categoria.img + '</td>';
-    linha += '<td>' + categoria.quant + '</td>';
     linha += '<td>' + categoria.preco + '</td>';
     linha += '<td>' + categoria.categ + '</td>';
+    linha += '<td>' + categoria.quant + '</td>';
     linha += '<td>' + categoria.quantVend + '</td>';
     linha += '<td>';
     linha += '<button class="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash"></i></button>';
