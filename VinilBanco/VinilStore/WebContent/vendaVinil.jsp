@@ -87,7 +87,7 @@
 			<div align="center">
 			<h4 align="right"><b>Total: </b><%=soma %></h4><br/>
 		  	  <br />
-		  	  	<button id="botaoSim" value="<%=cat.getId()%>" class="btn btn-default">Sim</button>
+		  	  	<button id="botaoSim" name="id" value="<%=cat.getId()%>" class="btn btn-default">Sim</button>
 		  	  	<button id="botaoNao" name="nao" class="btn btn-default">Não</button>
 		  	 </div>
            <%}else if(cat != null){%>

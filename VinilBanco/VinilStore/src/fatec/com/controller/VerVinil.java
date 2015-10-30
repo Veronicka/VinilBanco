@@ -39,10 +39,7 @@ public class VerVinil extends HttpServlet {
 					cat = Inventario.inventario.get(j);
 				}
 			}
-//			String json = new Gson().toJson("iae");
-//			response.setContentType("application/json");
-//	        response.setCharacterEncoding("UTF-8");
-//	        response.getWriter().write(json);
+
 			sessao.setAttribute("cat", cat);
 			response.sendRedirect(request.getContextPath() + "/venda.jsp");
 		} else {

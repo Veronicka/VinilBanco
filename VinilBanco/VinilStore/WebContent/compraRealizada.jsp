@@ -1,3 +1,5 @@
+<%@page import="fatec.com.model.Inventario"%>
+<%@page import="fatec.com.controller.Carrinho"%>
 <%@page import="fatec.com.model.Categoria"%>
 <%@page import="fatec.com.model.Vendidos"%>
 <%@page import="java.util.ArrayList"%>
@@ -55,42 +57,40 @@
         <div class="col-md-8">
 	        <h2>Compra Realizada!</h2>
 	        <hr>
-	        <%Vendidos vendido = (Vendidos) session.getAttribute("venda"); %>
+	        <%Vendidos v = (Vendidos) session.getAttribute("venda"); %>
 	        <%Float soma = (Float) session.getAttribute("somaTotal"); %>
-	        <%ArrayList<Vendidos> vendidos = (ArrayList<Vendidos>) session.getAttribute("vendidos"); %>
-	        <%if(vendidos != null){ %>
+	        <%ArrayList<Categoria> vend = (ArrayList<Categoria>) session.getAttribute("vendidos"); %>
+	        <%if(v != null){ %>
+	        <ul style="list-style-type:none">
+	        	<li><b>Nome: </b><%=v.getNome()%></li>
+  				<li><b>Categoria: </b><%=v.getCateg()%></li>
+  				<li><b>Quantidade: </b></li>
+  				<li><b>Preço: </b><%=v.getPreco()%></li>
+  				<li><b>Data/Hora: </b><%=v.getHora()%></li>
+	        </ul>
+	        <br/>
+        <%} if(vend != null || !vend.isEmpty()){ %>
 	        <table class="table table-hover">
 	        	<thead>
 	                <tr>
 	                  <th>Nome</th>
 	                  <th>Categoria</th>
-	                  <th>Quantidade</th>
 	                  <th>Preço</th>
-	                  <th>Data/Hora</th>
 	                </tr>
                 </thead>
-                <%for(Vendidos c: vendidos){ %>
+                <%for(Categoria c: vend){ %>
                 	<tr>
                 		<td><%=c.getNome() %></td>
                 		<td><%=c.getCateg() %></td>
-                		<td></td>
                 		<td><%=c.getPreco() %></td>
-                		<td><%=c.getHora() %></td>
+                		
                 	</tr>
                 <%} %>
 			</table>
 			<h4 align="right"><b>Total da compra: </b><%=soma %></h4><br/>
-        <%}else if(vendido != null){ %>
-	        <ul style="list-style-type:none">
-	        	<li><b>Nome: </b><%=vendido.getNome()%></li>
-  				<li><b>Categoria: </b><%=vendido.getCateg()%></li>
-  				<li><b>Quantidade: </b></li>
-  				<li><b>Preço: </b><%=vendido.getPreco()%></li>
-  				<li><b>Data/Hora: </b><%=vendido.getHora()%></li>
-	        </ul>
-	        <br/>
-        <%} %>
+        <%}%>
 	    	<h3 align="center">A Vinil Store agradece sua compra!</h3>
+	    	<div align="center"><form action="limpar" method="post"><button type="submit">Página inicial</button></form></div>
         </div>
         <div class="col-md-2"></div>
      </div>

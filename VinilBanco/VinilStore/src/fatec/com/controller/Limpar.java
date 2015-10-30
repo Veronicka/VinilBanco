@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fatec.com.model.Inventario;
 
@@ -19,10 +20,13 @@ public class Limpar extends HttpServlet {
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession sessao = request.getSession();
 		Inventario.carrinho.clear();
 		Venda.soma = 0;
 		Carrinho.soma = 0;
 		response.sendRedirect("index.html");
+		sessao.setAttribute("carrinho", Inventario.carrinho);
+		sessao.setAttribute("soma", Carrinho.soma);
 	}
 
 }

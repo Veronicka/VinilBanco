@@ -64,7 +64,6 @@
 	                <tr>
 	                  <th>Nome</th>
 	                  <th>Categoria</th>
-	                  <th>Quantidade</th>
 	                  <th>Preço</th>
 	                </tr>
                 </thead>
@@ -72,7 +71,6 @@
                 	<tr>
                 		<td><%=c.getNome() %></td>
                 		<td><%=c.getCateg() %></td>
-                		<td></td>
                 		<td><%=c.getPreco() %></td>
                 	</tr>
                 <%} %>
