@@ -24,7 +24,7 @@ public class Limpar extends HttpServlet {
 		Inventario.carrinho.clear();
 		Venda.soma = 0;
 		Carrinho.soma = 0;
-		response.sendRedirect("index.html");
+		response.sendRedirect("index.jsp");
 		sessao.setAttribute("carrinho", Inventario.carrinho);
 		sessao.setAttribute("soma", Carrinho.soma);
 	}

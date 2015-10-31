@@ -1,5 +1,7 @@
 package fatec.com.model;
 
+import java.util.ArrayList;
+
 public class Categoria {
 	private Integer id;
 	private String nome;
@@ -9,6 +11,7 @@ public class Categoria {
 	private Integer quant;
 	private String categ;
 	private Integer quantVend;
+	private ArrayList<String> msg;
 	
 		
 	public Categoria(Integer id, String nome, String creation, Float preco, String img, Integer quant, String categ, Integer quantVend) {
@@ -21,6 +24,7 @@ public class Categoria {
 		this.quant = quant;
 		this.setCateg(categ);
 		this.setQuantVend(quantVend);
+		msg = new ArrayList<String>();
 	}
 	
 	public Integer getQuant() {
@@ -79,5 +83,13 @@ public class Categoria {
 
 	public void setQuantVend(Integer quantVend) {
 		this.quantVend = quantVend;
+	}
+
+	public ArrayList<String> getMsg() {
+		return msg;
+	}
+
+	public void setMsg(ArrayList<String> msg) {
+		this.msg = msg;
 	}
 }

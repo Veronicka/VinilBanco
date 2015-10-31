@@ -38,7 +38,6 @@ public class Carrinho extends HttpServlet {
 				}
 			}
 		}
-		System.out.println("carro");
 		sessao.setAttribute("carrinho", Inventario.carrinho);
 		sessao.setAttribute("soma", soma);
 		response.sendRedirect(request.getContextPath() + "/carrinho.jsp");

@@ -1,3 +1,4 @@
+<%@page import="fatec.com.model.Usuario"%>
 <%@page import="fatec.com.model.Categoria"%>
 <%@page import="fatec.com.model.Vendidos"%>
 <%@page import="java.util.ArrayList"%>
@@ -26,11 +27,11 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="index.html">Vinil Store</a>
+      			<a class="navbar-brand" href="index.jsp">Vinil Store</a>
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
-        			<li class="active"><a href="index.html">Novos<span class="sr-only">(current)</span></a></li>
+        			<li><a href="index.jsp">Novos<span class="sr-only">(current)</span></a></li>
         			<li><a href="#">Usados</a></li>
         			<li><a href="relatorioVendas.jsp">Relatório</a></li>
         			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
@@ -43,8 +44,14 @@
                         </button>
                 </form>
         		<ul class="nav navbar-nav navbar-right">
-        			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<li><a href="#">Login</a></li>
+        			<li class="active"><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
+        			<%Usuario u = (Usuario) session.getAttribute("user"); %>
+	        		<%if(u == null){%>
+	        			<li><a href="login.jsp" id="log">Login</a></li>  			
+	        		<%}else{%>
+	        			<%session.removeAttribute("user");%>
+	        			<li><a href="index.jsp" id="log">Logout</a></li>
+	        		<%}%>
         		</ul>
         	</div>
   		</div>
@@ -62,6 +69,7 @@
 	        <table class="table table-hover">
 	        	<thead>
 	                <tr>
+	                  <th>Imagem</th>
 	                  <th>Nome</th>
 	                  <th>Categoria</th>
 	                  <th>Preço</th>
@@ -69,6 +77,7 @@
                 </thead>
                 <%for(Categoria c: carrinho){ %>
                 	<tr>
+                		<td><img src="<%=c.getImg()%>" class="img-thumbnail" style="width: 100px; height: 100px;" /></td>
                 		<td><%=c.getNome() %></td>
                 		<td><%=c.getCateg() %></td>
                 		<td><%=c.getPreco() %></td>
@@ -76,7 +85,10 @@
                 <%} %>
 			</table>
 			<h4 align="right"><b>Total: </b><%=soma %></h4><br/>
-			<div align="center"><a class="btn btn-default" href="vendaVinil.jsp">Comprar Agora</a></div>
+			<div align="center">
+				<a class="btn btn-default" href="index.jsp">Add Mais</a>&nbsp;
+				<a class="btn btn-default" href="vendaVinil.jsp">Comprar Agora</a>
+			</div>
         </div>
         <%}else{ %>
         	<h4>Carrinho vazio!</h4>

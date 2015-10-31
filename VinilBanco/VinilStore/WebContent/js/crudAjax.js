@@ -6,6 +6,7 @@ $(document).ready(function () {
   var $quantInput = $('#quant-input');
   var $precoInput = $('#preco-input');
   var $categInput = $('#categ-input');
+  var $log = $('#log');
   var $simInput = $('#botaoSim');
   var $naoInput = $('#botaoNao');
   var $imgInput = $('#img-input');
@@ -47,11 +48,20 @@ $(document).ready(function () {
     			  {'id': categoria.id}).success(function () {
     				  window.location = "venda.jsp";
     			  }).error(function (erros) {
-    				  alert('Não é possível apagar no momento');
+    				  alert('Não é possível selecionar este vinil no momento');
     			  });
       });
       $listaVinis.append($linhaObjeto);     
   }
+  
+  $log.click(function(){
+	  var lo = $('logout').val();
+	  $.post('login', {'log': lo}).success(function(){
+		  window.location = "index.jsp";
+	  }).error(function(error){
+		  alert('Não é possível deslogar-se!')
+	  });
+  });
   
   $simInput.click(function(){
 	  var categoria = $simInput.val();

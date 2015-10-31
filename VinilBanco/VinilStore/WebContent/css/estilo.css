@@ -8,6 +8,9 @@ body {
 #corbaixo{
 	background-color: #8F8D8D;
 }
+#logar{
+	margin-top: 40px;
+}
 #rodape{
 	background-color: #101010;
 }
@@ -33,3 +36,4 @@ footer {
     height: 100px;
     background-color: green;
 }
+

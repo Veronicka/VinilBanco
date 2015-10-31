@@ -40,7 +40,24 @@ public class Venda extends HttpServlet {
 		Vendidos v = null;
 		Vendidos vend = null;
 		int id=0;
-		if (i != null) {
+		
+		if(Inventario.carrinho != null && !Inventario.carrinho.isEmpty()){
+			for(Categoria c: Inventario.carrinho){
+				for(Categoria inv: Inventario.inventario){
+					if(c.getId().equals(inv.getId())){
+						vend = new Vendidos(inv.getId(), inv.getNome(), inv.getCreation(), inv.getPreco(), inv.getQuant(), inv.getCateg(),inv.getQuantVend(), data);
+						Inventario.vendidos.add(vend);
+						int qu = inv.getQuant();
+						int quv = inv.getQuantVend();
+						inv.setQuant(qu-1);
+						inv.setQuantVend(quv+1);
+						soma+=inv.getPreco();
+					}
+				}
+			}
+			sessao.setAttribute("carr", Inventario.carrinho);
+			sessao.setAttribute("somaTotal", soma);
+		}else if (i != null) {
 			try {
 				id = Integer.parseInt(i);
 			} catch (Exception e) {
@@ -58,22 +75,6 @@ public class Venda extends HttpServlet {
 			}
 			sessao.setAttribute("venda", v);
 
-		}else if(Inventario.carrinho != null || !Inventario.carrinho.isEmpty()){
-			for(Categoria c: Inventario.carrinho){
-				for(Categoria inv: Inventario.inventario){
-					if(c.getId().equals(inv.getId())){
-						vend = new Vendidos(inv.getId(), inv.getNome(), inv.getCreation(), inv.getPreco(), inv.getQuant(), inv.getCateg(),inv.getQuantVend(), data);
-						Inventario.vendidos.add(vend);
-						int qu = inv.getQuant();
-						int quv = inv.getQuantVend();
-						inv.setQuant(qu-1);
-						inv.setQuantVend(quv+1);
-						soma+=inv.getPreco();
-					}
-				}
-			}
-			sessao.setAttribute("vendidos", Inventario.carrinho);
-			sessao.setAttribute("somaTotal", soma);
 		}
 	}
 

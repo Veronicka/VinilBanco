@@ -1,3 +1,4 @@
+<%@page import="fatec.com.model.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="fatec.com.model.Categoria"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -25,11 +26,11 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="index.html">Vinil Store</a>
+      			<a class="navbar-brand" href="index.jsp">Vinil Store</a>
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
-        			<li class="active"><a href="index.html">Novos<span class="sr-only">(current)</span></a></li>
+        			<li class="active"><a href="index.jsp">Novos<span class="sr-only">(current)</span></a></li>
         			<li><a href="#">Usados</a></li>
         			<li><a href="#">Trocar</a></li>
         			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
@@ -43,7 +44,13 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<li><a href="#">Login</a></li>
+	        		<%Usuario u = (Usuario) session.getAttribute("user"); %>
+	        		<%if(u == null){%>
+	        			<li><a href="login.jsp" id="log">Login</a></li>  			
+	        		<%}else{%>
+	        			<%session.removeAttribute("user");%>
+	        			<li><a href="index.jsp" id="log">Logout</a></li>
+	        		<%}%>
         		</ul>
         	</div>
   		</div>

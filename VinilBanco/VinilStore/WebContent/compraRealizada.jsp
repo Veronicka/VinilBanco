@@ -1,3 +1,4 @@
+<%@page import="fatec.com.model.Usuario"%>
 <%@page import="fatec.com.model.Inventario"%>
 <%@page import="fatec.com.controller.Carrinho"%>
 <%@page import="fatec.com.model.Categoria"%>
@@ -28,8 +29,9 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="index.html">Vinil Store</a>
+      			<a class="navbar-brand" href="index.jsp">Vinil Store</a>
     		</div>
+    		<%Usuario u = (Usuario) session.getAttribute("user"); %>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
         			<li class="active"><form action="limpar" method="post"><button type="submit">Novos</button></form><span class="sr-only">(current)</span></a></li>
@@ -45,7 +47,12 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<li><a href="#">Login</a></li>
+	        		<%if(u == null){%>
+	        			<li><a href="login.jsp" id="log">Login</a></li>  			
+	        		<%}else{%>
+	        			<%session.removeAttribute("user");%>
+	        			<li><a href="index.jsp" id="log">Logout</a></li>
+	        		<%}%>
         		</ul>
         	</div>
   		</div>
@@ -57,10 +64,32 @@
         <div class="col-md-8">
 	        <h2>Compra Realizada!</h2>
 	        <hr>
-	        <%Vendidos v = (Vendidos) session.getAttribute("venda"); %>
+	        <!-- <%Vendidos v = (Vendidos) session.getAttribute("venda"); %>-->
 	        <%Float soma = (Float) session.getAttribute("somaTotal"); %>
-	        <%ArrayList<Categoria> vend = (ArrayList<Categoria>) session.getAttribute("vendidos"); %>
-	        <%if(v != null){ %>
+	        <%ArrayList<Categoria> carr = (ArrayList<Categoria>) session.getAttribute("carr");%>
+	        
+	        <%if(carr != null && !carr.isEmpty()){ %>
+	        <table class="table table-hover">
+	        	<thead>
+	                <tr>
+	                  <th>Imagem</th>
+	                  <th>Nome</th>
+	                  <th>Categoria</th>
+	                  <th>Preço</th>
+	                </tr>
+                </thead>
+                <%for(Categoria c: carr){ %>
+                	<tr>
+                		<td><img src="<%=c.getImg()%>"  class="img-thumbnail" style="width: 100px; height: 100px;"></td>
+                		<td><%=c.getNome() %></td>
+                		<td><%=c.getCateg() %></td>
+                		<td><%=c.getPreco() %></td>
+                		
+                	</tr>
+       		 <%}%>
+            </table>
+			<h4 align="right"><b>Total da compra: </b><%=soma %></h4><br/>
+                <%}else if(v != null){ %>
 	        <ul style="list-style-type:none">
 	        	<li><b>Nome: </b><%=v.getNome()%></li>
   				<li><b>Categoria: </b><%=v.getCateg()%></li>
@@ -69,28 +98,9 @@
   				<li><b>Data/Hora: </b><%=v.getHora()%></li>
 	        </ul>
 	        <br/>
-        <%} if(vend != null || !vend.isEmpty()){ %>
-	        <table class="table table-hover">
-	        	<thead>
-	                <tr>
-	                  <th>Nome</th>
-	                  <th>Categoria</th>
-	                  <th>Preço</th>
-	                </tr>
-                </thead>
-                <%for(Categoria c: vend){ %>
-                	<tr>
-                		<td><%=c.getNome() %></td>
-                		<td><%=c.getCateg() %></td>
-                		<td><%=c.getPreco() %></td>
-                		
-                	</tr>
-                <%} %>
-			</table>
-			<h4 align="right"><b>Total da compra: </b><%=soma %></h4><br/>
         <%}%>
 	    	<h3 align="center">A Vinil Store agradece sua compra!</h3>
-	    	<div align="center"><form action="limpar" method="post"><button type="submit">Página inicial</button></form></div>
+	    	<div align="center"><form action="limpar" method="post"><button type="submit" class="btn btn-default">Página inicial</button></form></div>
         </div>
         <div class="col-md-2"></div>
      </div>
