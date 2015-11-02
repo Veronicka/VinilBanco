@@ -11,7 +11,7 @@ public class Categoria {
 	private Integer quant;
 	private String categ;
 	private Integer quantVend;
-	private ArrayList<String> msg;
+	private ArrayList<Msg> msg;
 	
 		
 	public Categoria(Integer id, String nome, String creation, Float preco, String img, Integer quant, String categ, Integer quantVend) {
@@ -22,9 +22,9 @@ public class Categoria {
 		this.preco = preco;
 		this.img = img;
 		this.quant = quant;
-		this.setCateg(categ);
-		this.setQuantVend(quantVend);
-		msg = new ArrayList<String>();
+		this.categ = categ;
+		this.quantVend = quantVend;
+		msg = new ArrayList<Msg>();
 	}
 	
 	public Integer getQuant() {
@@ -85,11 +85,11 @@ public class Categoria {
 		this.quantVend = quantVend;
 	}
 
-	public ArrayList<String> getMsg() {
+	public ArrayList<Msg> getMsg() {
 		return msg;
 	}
 
-	public void setMsg(ArrayList<String> msg) {
+	public void setMsg(ArrayList<Msg> msg) {
 		this.msg = msg;
 	}
 }

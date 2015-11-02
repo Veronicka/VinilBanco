@@ -1,3 +1,4 @@
+<%@page import="fatec.com.controller.Autenticador"%>
 <%@page import="fatec.com.model.Usuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="fatec.com.model.Categoria"%>
@@ -30,10 +31,12 @@
     		</div>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
-        			<li class="active"><a href="index.jsp">Novos<span class="sr-only">(current)</span></a></li>
-        			<li><a href="#">Usados</a></li>
-        			<li><a href="#">Trocar</a></li>
-        			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
+        			<%if(Autenticador.user != null){%>
+        				<%if(Autenticador.user.getEhFuncionario()){%>
+        					<li><a href="relatorioVendas.jsp">Relatório</a></li>
+        					<li ><a href="inserirVinil.html">Inserir Vinil</a></li>
+        					<%}else%> <li id="iV" ><a href="inserirVinil.html">Inserir Vinil</a></li>
+        			<%}%>
         			
         		</ul>
         		<form class="navbar-form navbar-left" role="search">
@@ -44,13 +47,12 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="carrinho.jsp" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<%Usuario u = (Usuario) session.getAttribute("user"); %>
-	        		<%if(u == null){%>
+	        		<%if(Autenticador.user == null){%>
 	        			<li><a href="login.jsp" id="log">Login</a></li>  			
 	        		<%}else{%>
-	        			<%session.removeAttribute("user");%>
+	        			<%Autenticador.user = null;%>
 	        			<li><a href="index.jsp" id="log">Logout</a></li>
-	        		<%}%>
+	        		<%} %>
         		</ul>
         	</div>
   		</div>
@@ -94,8 +96,10 @@
 			<div align="center">
 			<h4 align="right"><b>Total: </b><%=soma %></h4><br/>
 		  	  <br />
-		  	  	<button id="botaoSim" name="id" value="<%=cat.getId()%>" class="btn btn-default">Sim</button>
-		  	  	<button id="botaoNao" name="nao" class="btn btn-default">Não</button>
+		  	  	<div>
+		  	  		<div style="float: left; width: 500px;"><form action="venda" method="post"><input hidden="hidden" name="id" value="<%=cat.getId()%>"><button type="submit" class="btn btn-lg btn-default">Sim</button></form></div>
+		  	  		<div style="float: right; width: 300px;"><button id="botaoNao" name="nao" class="btn btn-lg btn-default">Não</button></div>
+		  	  	</div>
 		  	 </div>
            <%}else if(cat != null){%>
            		<div class="col-md-5" align="center">
@@ -108,9 +112,11 @@
 		  	  	<h3>R$<%=cat.getPreco() %></h3>
 		  	  </div>
 		  	  <div>
-		  	  <br />
-		  	  	<button id="botaoSim" value="<%=cat.getId()%>" class="btn btn-default">Sim</button>
-		  	  	<button id="botaoNao" name="nao" class="btn btn-default">Não</button>
+		  	  <br /><br/>
+		  	  <div align="center">
+		  	  	<div style="float: left; width: 100px;"><form action="venda" method="post"><input hidden="hidden" name="id" value="<%=cat.getId()%>"><button type="submit" class="btn btn-lg btn-default">Sim</button></form></div>
+		  	  	<div style="float: right; width: 400px;"><button id="botaoNao" name="nao" class="btn btn-lg btn-default">Não</button></div>
+		  	  </div>
 		  	  </div>
 	  		<%}%>
            </div>	        

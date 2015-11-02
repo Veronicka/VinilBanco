@@ -9,9 +9,10 @@ public class Vendidos {
 	private String categ;
 	private Integer quantVend;
 	private String hora;
+	private String img;
 	
 		
-	public Vendidos(Integer id, String nome, String creation, Float preco, Integer quant, String categ, Integer quantVend, String hora) {
+	public Vendidos(Integer id, String nome, String creation, Float preco, Integer quant, String categ, Integer quantVend, String hora, String img) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -20,7 +21,8 @@ public class Vendidos {
 		this.quant = quant;
 		this.categ = categ;
 		this.quantVend = quantVend;
-		this.setHora(hora);
+		this.hora = hora;
+		this.img = img;
 	}
 	
 	public Integer getQuant() {
@@ -79,5 +81,12 @@ public class Vendidos {
 
 	public void setHora(String hora) {
 		this.hora = hora;
+	}
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 }

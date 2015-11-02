@@ -29,6 +29,8 @@ public class Inventario {
 		ca = new Categoria(5, "NOVO - AC/DC - Anything Goes IN Leipzig LP Duplo", "29/09/2015", 160.00f, "img/im5.jpg", 19, "Rock", 10);
 		Inventario.inventario.add(ca);
 		ca = new Categoria(6, "NOVO - Aretha Franklin - Aretha Now LP", "29/09/2015", 120.00f, "img/im6.jpg", 25, "Blues", 23);
+		Msg m = new Msg("Amanda", "Linda Voz");
+		ca.getMsg().add(m);
 		Inventario.inventario.add(ca);
 	}
 	

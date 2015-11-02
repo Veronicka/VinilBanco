@@ -17,6 +17,7 @@ import fatec.com.model.Usuario;
 public class Autenticador extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static ArrayList<Usuario> listaDeUsuarios = new ArrayList<>();
+	public static Usuario user = null;
 	
 	public Autenticador() {
 		super();
@@ -41,16 +42,16 @@ public class Autenticador extends HttpServlet {
 			String l = request.getParameter("novousername");
 			String s = request.getParameter("novapassword");
 			
-			Usuario user = new Usuario();
-			user.setLogin(l);
-			user.setSenha(s);
-			user.setNome(n);
-			user.setEhFuncionario(false);
+			Usuario us = new Usuario();
+			us.setLogin(l);
+			us.setSenha(s);
+			us.setNome(n);
+			us.setEhFuncionario(false);
 			
-			listaDeUsuarios.add(user);
+			listaDeUsuarios.add(us);
 		}
 		
-		Usuario temp = new Usuario();
+		user = new Usuario();
 		
 		if(listaDeUsuarios.size()==0){			
 			Usuario veve = new Usuario();
@@ -70,15 +71,15 @@ public class Autenticador extends HttpServlet {
 				
 		for(Usuario u : listaDeUsuarios){
 			if(u.getLogin().equals(login) && u.getSenha().equals(senha)){
-				temp.setLogin(u.getLogin());
-				temp.setSenha(u.getSenha());
-				temp.setNome(u.getNome());
-				temp.setEhFuncionario(u.getEhFuncionario());
+				user.setLogin(u.getLogin());
+				user.setSenha(u.getSenha());
+				user.setNome(u.getNome());
+				user.setEhFuncionario(u.getEhFuncionario());
 			}
 		}
-		if(temp.getLogin()!=null){		
-			request.getSession().setAttribute("usuario", temp);
-			sessao.setAttribute("user", temp);
+		if(user.getLogin()!=null){		
+			request.getSession().setAttribute("usuario", user);
+			sessao.setAttribute("user", user);
 			response.sendRedirect(request.getContextPath() + "/index.jsp");
 			
 			String json = new Gson().toJson("Logout");

@@ -41,40 +41,47 @@ public class Venda extends HttpServlet {
 		Vendidos vend = null;
 		int id=0;
 		
-		if(Inventario.carrinho != null && !Inventario.carrinho.isEmpty()){
-			for(Categoria c: Inventario.carrinho){
-				for(Categoria inv: Inventario.inventario){
-					if(c.getId().equals(inv.getId())){
-						vend = new Vendidos(inv.getId(), inv.getNome(), inv.getCreation(), inv.getPreco(), inv.getQuant(), inv.getCateg(),inv.getQuantVend(), data);
-						Inventario.vendidos.add(vend);
-						int qu = inv.getQuant();
-						int quv = inv.getQuantVend();
-						inv.setQuant(qu-1);
-						inv.setQuantVend(quv+1);
-						soma+=inv.getPreco();
+		if(Autenticador.user != null){
+			if(Inventario.carrinho != null && !Inventario.carrinho.isEmpty()){
+				for(Categoria c: Inventario.carrinho){
+					for(Categoria inv: Inventario.inventario){
+						if(c.getId().equals(inv.getId())){
+							vend = new Vendidos(inv.getId(), inv.getNome(), inv.getCreation(), inv.getPreco(), inv.getQuant(), inv.getCateg(),inv.getQuantVend(), data, inv.getImg());
+							Inventario.vendidos.add(vend);
+							int qu = inv.getQuant();
+							int quv = inv.getQuantVend();
+							inv.setQuant(qu-1);
+							inv.setQuantVend(quv+1);
+							soma+=inv.getPreco();
+						}
 					}
 				}
-			}
-			sessao.setAttribute("carr", Inventario.carrinho);
-			sessao.setAttribute("somaTotal", soma);
-		}else if (i != null) {
-			try {
-				id = Integer.parseInt(i);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			for (int j = 0; j < Inventario.inventario.size(); j++) {
-				if (Inventario.inventario.get(j).getId().equals(id)) {
-					v = new Vendidos(Inventario.inventario.get(j).getId(), Inventario.inventario.get(j).getNome(), Inventario.inventario.get(j).getCreation(), Inventario.inventario.get(j).getPreco(), Inventario.inventario.get(j).getQuant(), Inventario.inventario.get(j).getCateg(), Inventario.inventario.get(j).getQuantVend(), data);
-					Inventario.vendidos.add(v);
-					int q = Inventario.inventario.get(j).getQuant();
-					int qv = Inventario.inventario.get(j).getQuantVend();
-					Inventario.inventario.get(j).setQuant(q-1);
-					Inventario.inventario.get(j).setQuantVend(qv+1);
+				
+				sessao.setAttribute("carr", Inventario.carrinho);
+				sessao.setAttribute("somaTotal", soma);
+				response.sendRedirect(request.getContextPath() + "/compraRealizada.jsp");
+			}else if (i != null) {
+				try {
+					id = Integer.parseInt(i);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			}
-			sessao.setAttribute("venda", v);
+				for (int j = 0; j < Inventario.inventario.size(); j++) {
+					if (Inventario.inventario.get(j).getId().equals(id)) {
+						v = new Vendidos(Inventario.inventario.get(j).getId(), Inventario.inventario.get(j).getNome(), Inventario.inventario.get(j).getCreation(), Inventario.inventario.get(j).getPreco(), Inventario.inventario.get(j).getQuant(), Inventario.inventario.get(j).getCateg(), Inventario.inventario.get(j).getQuantVend(), data, Inventario.inventario.get(j).getImg());
+						Inventario.vendidos.add(v);
+						int q = Inventario.inventario.get(j).getQuant();
+						int qv = Inventario.inventario.get(j).getQuantVend();
+						Inventario.inventario.get(j).setQuant(q-1);
+						Inventario.inventario.get(j).setQuantVend(qv+1);
+					}
+				}
+				sessao.setAttribute("venda", v);
+				response.sendRedirect(request.getContextPath() + "/compraRealizada.jsp");
 
+			}
+		}else{
+			response.sendRedirect(request.getContextPath() + "/login.jsp");
 		}
 	}
 

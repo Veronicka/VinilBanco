@@ -1,3 +1,4 @@
+<%@page import="fatec.com.controller.Autenticador"%>
 <%@page import="fatec.com.model.Usuario"%>
 <%@page import="fatec.com.model.Categoria"%>
 <%@page import="fatec.com.model.Vendidos"%>
@@ -32,9 +33,12 @@
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
         			<li><a href="index.jsp">Novos<span class="sr-only">(current)</span></a></li>
-        			<li><a href="#">Usados</a></li>
-        			<li><a href="relatorioVendas.jsp">Relatório</a></li>
-        			<li><a href="inserirVinil.html">Inserir Vinil</a></li>
+        			<%if(Autenticador.user != null){%>
+        				<%if(Autenticador.user.getEhFuncionario()){%>
+        					<li><a href="relatorioVendas.jsp">Relatório</a></li>
+        					<li ><a href="inserirVinil.html">Inserir Vinil</a></li>
+        					<%}else%> <li id="iV" ><a href="inserirVinil.html">Inserir Vinil</a></li>
+        			<%}%>
         			
         		</ul>
         		<form class="navbar-form navbar-left" role="search">
@@ -45,11 +49,10 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li class="active"><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-        			<%Usuario u = (Usuario) session.getAttribute("user"); %>
-	        		<%if(u == null){%>
+	        		<%if(Autenticador.user == null){%>
 	        			<li><a href="login.jsp" id="log">Login</a></li>  			
 	        		<%}else{%>
-	        			<%session.removeAttribute("user");%>
+	        			<%Autenticador.user = null;%>
 	        			<li><a href="index.jsp" id="log">Logout</a></li>
 	        		<%}%>
         		</ul>

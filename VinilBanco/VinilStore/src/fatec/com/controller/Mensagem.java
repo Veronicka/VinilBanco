@@ -11,13 +11,12 @@ import javax.servlet.http.HttpSession;
 import fatec.com.controller.Autenticador;
 import fatec.com.model.Categoria;
 import fatec.com.model.Inventario;
+import fatec.com.model.Msg;
 import fatec.com.model.Usuario;
 
 @WebServlet("/mensagem")
 public class Mensagem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Usuario user;
-	
 
     public Mensagem() {
         super();
@@ -34,17 +33,17 @@ public class Mensagem extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		if(msg!=null){ //tratar para nao inserir mensagem vazia
-			user = (Usuario) sessao.getAttribute("user");
-			if(user != null && !msg.isEmpty()){
+		if(msg!=null){
+			if(Autenticador.user != null && !msg.isEmpty()){
 				for(Categoria ca: Inventario.inventario){
 					if(ca.getId().equals(id)){
-						ca.getMsg().add(msg);
+						Msg m = new Msg(Autenticador.user.getNome(), msg);
+						ca.getMsg().add(m);
 					}
 				}
 				response.sendRedirect(request.getContextPath() + "/venda.jsp");
 			}
-			else if(user != null && msg.isEmpty()){
+			else if(Autenticador.user != null && msg.isEmpty()){
 				response.sendRedirect(request.getContextPath() + "/venda.jsp");
 			}
 			else{

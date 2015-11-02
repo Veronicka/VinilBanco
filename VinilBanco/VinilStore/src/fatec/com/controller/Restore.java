@@ -26,6 +26,7 @@ public class Restore extends HttpServlet {
 		HttpSession sessao = request.getSession();
 		String json = new Gson().toJson(Inventario.getInstance().getInventario());
 		sessao.setAttribute("vendidos", Inventario.vendidos);
+		sessao.setAttribute("vinisCat", Inventario.inventario);
 		response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);

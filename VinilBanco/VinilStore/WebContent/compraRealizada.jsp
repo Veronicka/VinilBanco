@@ -1,3 +1,4 @@
+<%@page import="fatec.com.controller.Autenticador"%>
 <%@page import="fatec.com.model.Usuario"%>
 <%@page import="fatec.com.model.Inventario"%>
 <%@page import="fatec.com.controller.Carrinho"%>
@@ -31,7 +32,6 @@
       			</button>
       			<a class="navbar-brand" href="index.jsp">Vinil Store</a>
     		</div>
-    		<%Usuario u = (Usuario) session.getAttribute("user"); %>
        	  	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       			<ul class="nav navbar-nav">
         			<li class="active"><form action="limpar" method="post"><button type="submit">Novos</button></form><span class="sr-only">(current)</span></a></li>
@@ -47,10 +47,10 @@
                 </form>
         		<ul class="nav navbar-nav navbar-right">
         			<li><a href="#" class="glyphicon glyphicon-shopping-cart btn-lg"></a></li>
-	        		<%if(u == null){%>
+	        		<%if(Autenticador.user == null){%>
 	        			<li><a href="login.jsp" id="log">Login</a></li>  			
 	        		<%}else{%>
-	        			<%session.removeAttribute("user");%>
+	        			<%Autenticador.user = null;%>
 	        			<li><a href="index.jsp" id="log">Logout</a></li>
 	        		<%}%>
         		</ul>
